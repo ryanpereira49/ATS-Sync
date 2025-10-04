@@ -1,0 +1,4 @@
+First I created a Spring Boot project with spring init
+Added dependencies
+Started web server with a hello world endpoint
+Started modeling the database (Lucid Chart)
