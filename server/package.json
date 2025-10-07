@@ -36,7 +36,9 @@
   "license": "MIT",
   "description": "An ATS compliant AI resume generator",
   "dependencies": {
-    "express": "^5.1.0"
+    "drizzle-orm": "^0.44.6",
+    "express": "^5.1.0",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.37.0",
