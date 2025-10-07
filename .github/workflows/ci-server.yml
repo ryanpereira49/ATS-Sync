@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+          cache: "npm"
+        working-directory: server
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: server
+
+      # --- Fast-Failing Checks ---
+
+      - name: Run ESLint check
+        run: npm run lint
+        working-directory: server
+
+      - name: Check for formatting issues
+        run: npm run format:check
+        working-directory: server
+
+      - name: Run TypeScript type checking
+        run: npm run type-check
+        working-directory: server
+
+      # --- Slower Check ---
+
+      - name: Run tests
+        run: npm run test:run
+        working-directory: server
