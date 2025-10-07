@@ -2,6 +2,7 @@ import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
 import perfectionist from "eslint-plugin-perfectionist";
+import vitestPlugin from "eslint-plugin-vitest";
 
 export default defineConfig(
   {
@@ -22,10 +23,10 @@ export default defineConfig(
   {
     files: ["**/*.test.ts", "**/*.spec.ts"],
     plugins: {
-      vitest,
+      vitest: vitestPlugin,
     },
     rules: {
-      ...vitest.configs.recommended.rules,
+      ...vitestPlugin.configs.recommended.rules,
       "@typescript-eslint/unbound-method": "off",
     },
   },
