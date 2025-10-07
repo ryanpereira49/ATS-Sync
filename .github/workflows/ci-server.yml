@@ -16,8 +16,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version-file: "server/.nvmrc"
+          node-version-file: ".nvmrc"
           cache: "npm"
+          cache-dependency-path: server/package-lock.json
+        working-directory: server
 
       - name: Install dependencies
         run: npm ci
