@@ -1,16 +1,18 @@
 import { defineConfig } from "eslint/config";
 import eslint from "@eslint/js";
 import tseslint from "typescript-eslint";
-import perfectionist from "eslint-plugin-perfectionist";
 import vitestPlugin from "eslint-plugin-vitest";
+import drizzle from "eslint-plugin-drizzle";
 
 export default defineConfig(
   {
+    // Ignore all generated JavaScript files
     ignores: ["**/*.js"],
   },
+
   eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
-  tseslint.configs.stylisticTypeChecked,
+  ...tseslint.configs.recommended,
+
   {
     languageOptions: {
       parserOptions: {
@@ -19,7 +21,7 @@ export default defineConfig(
       },
     },
   },
-  perfectionist.configs["recommended-natural"],
+
   {
     files: ["**/*.test.ts", "**/*.spec.ts"],
     plugins: {
@@ -27,7 +29,17 @@ export default defineConfig(
     },
     rules: {
       ...vitestPlugin.configs.recommended.rules,
+
       "@typescript-eslint/unbound-method": "off",
+    },
+  },
+
+  {
+    plugins: {
+      drizzle,
+    },
+    rules: {
+      ...drizzle.configs.recommended.rules,
     },
   },
 );
