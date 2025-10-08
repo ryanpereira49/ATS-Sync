@@ -31,10 +31,13 @@ export default defineConfig(
       ...vitestPlugin.configs.recommended.rules,
 
       "@typescript-eslint/unbound-method": "off",
+      "drizzle/enforce-delete-with-where": "off",
     },
   },
 
   {
+    files: ["**/*.ts"],
+    ignores: ["**/*.test.ts", "**/*.spec.ts"],
     plugins: {
       drizzle,
     },
