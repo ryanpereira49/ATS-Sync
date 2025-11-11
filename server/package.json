@@ -1,11 +1,14 @@
 {
   "name": "server",
   "version": "1.0.0",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src/**/*.js"
+    "lint": "eslint src/**/*.js",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "node src/migrate.js"
   },
   "keywords": [],
   "author": "",

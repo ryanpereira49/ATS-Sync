@@ -1,9 +1,9 @@
-const express = require('express');
-import { drizzle } from 'drizzle-orm/node-postgres';
+import express from 'express';
+import 'dotenv/config';
+import { db } from './src/db/index.js';
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-const db = drizzle(process.env.DATABASE_URL);
 
 app.use(express.json());
 
