@@ -1,6 +1,8 @@
 import fs from "fs";
-import pdfParse from "pdf-parse";
 import mammoth from "mammoth";
+import { PDFParse } from 'pdf-parse';
+import { text } from "stream/consumers";
+
 
 export const processResumeFile = async (file) => {
   const filePath = file.path;
@@ -9,15 +11,22 @@ export const processResumeFile = async (file) => {
   try {
     if (file.mimetype === "application/pdf") {
       const dataBuffer = fs.readFileSync(filePath);
-      const data = await pdfParse(dataBuffer);
+      const parser = new PDFParse({data: dataBuffer});
+      const data = await  parser.getText();
+      await parser.destroy();
+
       textContent = data.text;
     } else {
       const result = await mammoth.extractRawText({ path: filePath });
       textContent = result.value;
     }
 
-    const extractedData = extractCandidateData(textContent);
-    return extractedData;
+    //const extractedData = extractCandidateData(textContent);
+    //return extractedData;
+    return {
+        text: textContent
+    }
+
   } finally {
     fs.unlinkSync(filePath); // cleanup after processing
   }
