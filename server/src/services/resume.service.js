@@ -21,11 +21,9 @@ export const processResumeFile = async (file) => {
       textContent = result.value;
     }
 
-    //const extractedData = extractCandidateData(textContent);
-    //return extractedData;
-    return {
-        text: textContent
-    }
+    const resumeData = extractCandidateData(textContent);
+    return resumeData;
+    
 
   } finally {
     fs.unlinkSync(filePath); // cleanup after processing
@@ -33,14 +31,8 @@ export const processResumeFile = async (file) => {
 };
 
 function extractCandidateData(text) {
-  const email = text.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-z]{2,}/)?.[0];
-  const phone = text.match(/\+?\d[\d\s()-]{8,}\d/g)?.[0];
-  const name = text.split("\n")[0].trim();
-
-  return {
-    name: name || "Unknown",
-    email: email || "Not found",
-    phone: phone || "Not found",
-    summary: text.substring(0, 500) + "...",
-  };
+    // Placeholder for actual extraction logic with LLM
+    return {
+        text: text
+    }
 }
