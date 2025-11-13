@@ -10,6 +10,6 @@ router.post('/:userId', profileController.createProfile);
 router.put('/:userId', profileController.updateProfile);
 router.delete('/:userId', profileController.deleteProfile);
 
-router.post("/upload-resume", upload.single("resume"), profileController.uploadResume);
+router.post("/:userId/upload-resume", upload.single("resume"), profileController.uploadResume);
 
 export default router;
