@@ -1,7 +1,7 @@
 import fs from "fs";
 import mammoth from "mammoth";
 import { PDFParse } from 'pdf-parse';
-import { text } from "stream/consumers";
+import {ExtractDataFromResume} from "../utils/ai.gemini.js";
 
 
 export const processResumeFile = async (file) => {
@@ -30,9 +30,6 @@ export const processResumeFile = async (file) => {
   }
 };
 
-function extractCandidateData(text) {
-    // Placeholder for actual extraction logic with LLM
-    return {
-        text: text
-    }
+async function extractCandidateData(text) {
+    return await ExtractDataFromResume(text);
 }
