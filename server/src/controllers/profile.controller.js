@@ -1,4 +1,5 @@
 import { profileService } from "../services/profile.service.js";
+import { processResumeFile } from "../services/resume.service.js";
 
 const getProfile = async (req, res) => {
   try {
@@ -63,9 +64,26 @@ const deleteProfile = async (req, res) => {
   }
 };
 
+export const uploadResume = async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
+
+    const extractedData = await processResumeFile(req.file);
+    res.json({ success: true, data: extractedData });
+  } catch (error) {
+    console.error(error);
+    res
+      .status(error.status || 500)
+      .json({ error: error.message || "Error processing resume" });
+  }
+};
+
 export const profileController = {
   getProfile,
   createProfile,
   updateProfile,
   deleteProfile,
+  uploadResume,
 };
