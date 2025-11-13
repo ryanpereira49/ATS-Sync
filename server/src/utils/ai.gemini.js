@@ -1,19 +1,18 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+import { GoogleGenAI } from "@google/genai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-const ExtractDataFromResume = async (resumeText) => {
+async function ExtractDataFromResume (resumeText) {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-lite" });
-    const result = await model.generateContent(resumeText + "\n Structure the key candidate information in JSON format.");
-    const response = await result.response;
-    const text = response.text();
+    const response = await ai.models.generateContent({
+    model: 'gemini-2.5-flash-lite',
+    contents: resumeText+'Structure the above resume text into a JSON object with the following fields: fullName, email, phoneNumber, skills (as an array), workExperience (as an array of objects with company, role, startDate, endDate, and responsibilities), education (as an array of objects with institution, degree, startDate, endDate), and certifications (as an array). Ensure the JSON is properly formatted and remove and "\n".',
+  });
+    const text = response.text;
     return text;
   } catch (err) {
     console.error("Error initializing Gemini API:", err);
   }
-};
+}
 
-module.exports = {
-  ExtractDataFromResume,
-};
+export { ExtractDataFromResume };
