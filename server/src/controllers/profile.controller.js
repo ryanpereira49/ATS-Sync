@@ -64,7 +64,7 @@ const deleteProfile = async (req, res) => {
   }
 };
 
-export const uploadResume = async (req, res) => {
+export const uploadAndProcessResume = async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
@@ -85,5 +85,5 @@ export const profileController = {
   createProfile,
   updateProfile,
   deleteProfile,
-  uploadResume,
+  uploadAndProcessResume,
 };

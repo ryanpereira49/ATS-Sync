@@ -1,12 +1,13 @@
 import fs from "fs";
 import mammoth from "mammoth";
 import { PDFParse } from 'pdf-parse';
-import { text } from "stream/consumers";
+import {ExtractRawJSON} from "../utils/ai.gemini.js";
+import { cleanRawJSON } from "../utils/text.processing.js";
 
 
 export const processResumeFile = async (file) => {
   const filePath = file.path;
-  let textContent = "";
+  let parsedResumeText = "";
 
   try {
     if (file.mimetype === "application/pdf") {
@@ -15,24 +16,19 @@ export const processResumeFile = async (file) => {
       const data = await  parser.getText();
       await parser.destroy();
 
-      textContent = data.text;
+      parsedResumeText = data.text;
     } else {
       const result = await mammoth.extractRawText({ path: filePath });
-      textContent = result.value;
+      parsedResumeText = result.value;
     }
 
-    const resumeData = extractCandidateData(textContent);
-    return resumeData;
+    const RawJSON = await ExtractRawJSON(parsedResumeText);
+
+    const cleanedJSON = cleanRawJSON(RawJSON);
+    return cleanedJSON;
     
 
   } finally {
     fs.unlinkSync(filePath); // cleanup after processing
   }
 };
-
-function extractCandidateData(text) {
-    // Placeholder for actual extraction logic with LLM
-    return {
-        text: text
-    }
-}
