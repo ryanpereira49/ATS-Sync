@@ -159,3 +159,52 @@ export const profilesRelations = relations(profiles, ({ one, many }) => ({
   awards: many(awards),
   languages: many(languages)
 }));
+
+export const skillsRelations = relations(skills, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [skills.profileId],
+    references: [profiles.id],
+  }),
+}));
+
+export const workExperienceRelations = relations(workExperience, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [workExperience.profileId],
+    references: [profiles.id],
+  }),
+}));
+
+export const educationRelations = relations(education, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [education.profileId],
+    references: [profiles.id],
+  }),
+}));
+
+export const projectsRelations = relations(projects, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [projects.profileId],
+    references: [profiles.id],
+  }),
+}));
+
+export const certificationsRelations = relations(certifications, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [certifications.profileId],
+    references: [profiles.id],
+  }),
+}));
+
+export const awardsRelations = relations(awards, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [awards.profileId],
+    references: [profiles.id],
+  }),
+}));
+
+export const languagesRelations = relations(languages, ({ one }) => ({
+  profile: one(profiles, {
+    fields: [languages.profileId],
+    references: [profiles.id],
+  }),
+}));
